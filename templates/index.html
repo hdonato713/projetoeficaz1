@@ -1,0 +1,23 @@
+<DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Get-it</title>
+</head>
+<body>
+<img src="{{{{url_for('static', filename='img/logo-getit.png')}}}}">
+<p>Como post-it, mas com outro verbo<p>
+<form action="/submit" method="POST">
+    <label for="titulo">Título</label>
+    <input id="titulo" type="text" name="titulo" />
+    <label for="detlahes">Detalhes</label>
+    <input id="detalhes"  name="detalhes" />
+    <input type="submit" />
+</form>
+
+<ul>
+  {notes}
+</ul>
+
+</body>
+</html>
