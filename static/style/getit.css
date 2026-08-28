@@ -20,6 +20,7 @@ form {
 
 input {
     padding: 10px;
+    background-color: #F3F3F3;
     border: none;
     border-radius: 5px;
 }
@@ -41,3 +42,45 @@ li {
     list-style: none;
     border-radius: 5px;
 }
+
+h1 {
+    text-align: center;
+}
+
+form {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0002;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 100px;
+    background-color: #F3F3F3;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #f5c542;
+}
+
+button[type="button"] {
+    background-color: #dddddd;
+}
+

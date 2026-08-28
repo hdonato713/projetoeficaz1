@@ -1,4 +1,4 @@
-from utils import load_data, load_template, add_note, delete_note
+from utils import load_data, load_template, add_note, delete_note, get_note, update_note
 
 
 def index():
@@ -18,6 +18,18 @@ def submit(titulo, detalhes):
     }
 
     add_note(params)
+
+def edit(note_id):
+    nota = get_note(note_id)
+
+    return load_template("update.html").format(
+        id=nota.id,
+        titulo=nota.title,
+        detalhes=nota.content
+    )
+
+def update(note_id, titulo, detalhes):
+    update_note(note_id, titulo, detalhes)
 
 def delete(note_id):
     delete_note(note_id)
