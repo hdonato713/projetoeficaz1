@@ -12,15 +12,16 @@ def load_data(caminho):
     conexao = sqlite3.connect("banco.db")
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT title, content FROM note")
+    cursor.execute("SELECT id, title, content FROM note")
     resultados = cursor.fetchall()
 
     conexao.close()
 
     notas = []
 
-    for title, content in resultados:
+    for note_id, title, content in resultados:
         notas.append({
+            "id": note_id,
             "titulo": title,
             "detalhes": content
         })
@@ -58,6 +59,18 @@ def create_table():
             content TEXT NOT NULL
         )
     """)
+
+    conexao.commit()
+    conexao.close()
+
+def delete_note(note_id):
+    conexao = sqlite3.connect("banco.db")
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "DELETE FROM note WHERE id = ?",
+        (note_id,)
+    )
 
     conexao.commit()
     conexao.close()
