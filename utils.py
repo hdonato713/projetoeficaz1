@@ -1,28 +1,51 @@
 import sqlite3
 
-def load_data(caminho):
-    with open(("static/data/" + caminho), "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
-    return dados
-
 def load_template(caminho):
     with open(("templates/" + caminho), "r", encoding="utf-8") as arquivo:
         conteudo = arquivo.read()
 
         return conteudo
 
+def load_data(caminho):
+    create_table()
+
+    conexao = sqlite3.connect("banco.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT title, content FROM note")
+    resultados = cursor.fetchall()
+
+    conexao.close()
+
+    notas = []
+
+    for title, content in resultados:
+        notas.append({
+            "titulo": title,
+            "detalhes": content
+        })
+
+    return notas
+
 def add_note(nova_anotacao):
-    anotacoes = load_data("notes.json")
+    create_table()
 
-    anotacoes.append(nova_anotacao)
+    conexao = sqlite3.connect("banco.db")
+    cursor = conexao.cursor()
 
-    with open("static/data/notes.json", "w", encoding="utf-8") as arquivo:
-        json.dump(
-            anotacoes,
-            arquivo,
-            ensure_ascii=False,
-            indent=4
+    cursor.execute(
+        """
+        INSERT INTO note (title, content)
+        VALUES (?, ?)
+        """,
+        (
+            nova_anotacao["titulo"],
+            nova_anotacao["detalhes"]
         )
+    )
+
+    conexao.commit()
+    conexao.close()
 
 def create_table():
     conexao = sqlite3.connect("banco.db")
