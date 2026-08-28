@@ -1,4 +1,4 @@
-import json
+import sqlite3
 
 def load_data(caminho):
     with open(("static/data/" + caminho), "r", encoding="utf-8") as arquivo:
@@ -23,3 +23,18 @@ def add_note(nova_anotacao):
             ensure_ascii=False,
             indent=4
         )
+
+def create_table():
+    conexao = sqlite3.connect("banco.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS note (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        )
+    """)
+
+    conexao.commit()
+    conexao.close()
