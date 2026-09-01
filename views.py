@@ -22,6 +22,9 @@ def submit(titulo, detalhes):
 def edit(note_id):
     nota = get_note(note_id)
 
+    if nota is None:
+        return "Anotação não encontrada"
+
     return load_template("update.html").format(
         id=nota.id,
         titulo=nota.title,
