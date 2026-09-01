@@ -23,18 +23,19 @@ def load_data(caminho):
     conexao = sqlite3.connect("banco.db")
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, title, content FROM note")
+    cursor.execute("SELECT id, title, content, favorite FROM note ORDER BY favorite DESC, id ASC")
     resultados = cursor.fetchall()
 
     conexao.close()
 
     notas = []
 
-    for note_id, title, content in resultados:
+    for note_id, title, content, favorite in resultados:
         notas.append({
             "id": note_id,
             "titulo": title,
-            "detalhes": content
+            "detalhes": content,
+            "favorite" : favorite
         })
 
     return notas
@@ -67,7 +68,8 @@ def create_table():
         CREATE TABLE IF NOT EXISTS note (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            content TEXT NOT NULL
+            content TEXT NOT NULL,
+            favorite INTEGER NOT NULL DEFAULT 0
         )
     """)
 
@@ -120,6 +122,25 @@ def update_note(note_id, titulo, detalhes):
         WHERE id = ?
         """,
         (titulo, detalhes, note_id)
+    )
+
+    conexao.commit()
+    conexao.close()
+
+def turn_favorite (note_id):
+    conexao = sqlite3.connect("banco.db")
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        """
+        UPDATE note
+        SET favorite = CASE
+            WHEN favorite = 1 THEN 0
+            ELSE 1
+        END
+        WHERE id = ?
+        """,
+        (note_id,)
     )
 
     conexao.commit()

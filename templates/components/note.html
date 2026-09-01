@@ -1,6 +1,7 @@
-<li>
-    <h3>{title}</h3>
-    <p>{details}</p>
-    <a href="/update/{id}" name="edit_button" class="edit-button">Editar</a>
-    <a href="/delete/{id}" name="delete_button" class="delete_button">Excluir</a>
-  </li>
+<li class="card {favorite_class}">
+  <a href="/favorite/{id}" name="favorite_button" class="favorite-button" title="favoritar ou desfavoritar">{favorite_icon}</a>
+  <h3>{title}</h3>
+  <p>{details}</p>
+  <a href="/update/{id}" name="edit_button" class="edit-button">Editar</a>
+  <a href="/delete/{id}" name="delete_button" class="delete_button">Excluir</a>
+</li>
